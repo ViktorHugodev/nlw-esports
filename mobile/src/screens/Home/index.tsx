@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { View, Image, FlatList } from 'react-native';
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import logoImg from '../../assets/logo-nlw-esports.png'
@@ -18,31 +18,33 @@ export function Home() {
       .then(response => response.json())
       .then(data => setGames(data))
   }, [])
-  function handleOpenGame(){
-    navigation.navigate('game')
+
+  function handleOpenGame({ bannerUrl, id, title }: IGameCard) {
+    navigation.navigate('game', { bannerUrl, id, title })
   }
+
   return (
     <Background>
 
 
-    <SafeAreaView style={styles.container}>
-      <Image source={logoImg} style={styles.logo} />
-      <Heading title='Find your duo!'
-        subtitle='Select the game you want to play...' />
-      <FlatList data={games}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) =>
-        <GameCard 
-        data={item} 
-        onPress={handleOpenGame}
+      <SafeAreaView style={styles.container}>
+        <Image source={logoImg} style={styles.logo} />
+        <Heading title='Find your duo!'
+          subtitle='Select the game you want to play...' />
+        <FlatList data={games}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) =>
+            <GameCard
+              data={item}
+              onPress={() => handleOpenGame(item)}
+            />
+          }
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          contentContainerStyle={styles.contentList}
         />
-        }
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        contentContainerStyle={styles.contentList}
-      />
 
-    </SafeAreaView>
+      </SafeAreaView>
     </Background>
   );
 }
