@@ -1,6 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRoute } from '@react-navigation/native'
-import { TouchableOpacity, View, Image, FlatList } from 'react-native'
+import { TouchableOpacity, View, Image, FlatList, Text } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import logoImg from '../../assets/logo-nlw-esports.png'
@@ -55,20 +55,33 @@ export function Game({ data }: Props) {
           />
           <View style={styles.right} />
         </View>
+
         <Image
           source={{ uri: game.bannerUrl }}
           style={styles.cover}
           resizeMode='cover'
         />
+
         <Heading
           subtitle='Conecte-se e comece a jogar!'
           title={game.title} />
+
         <FlatList
           data={gameSelected}
           keyExtractor={item => item.id}
+          horizontal
           renderItem={({ item }) => (
-
-            <DuoCard data={item} />
+            <DuoCard 
+            onConnect={() => {}}
+            data={item} />
+          )}
+          style={styles.containerList}
+          contentContainerStyle={[gameSelected.length > 0 ? styles.contentList: styles.emptyListContent ]}
+          showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={() => (
+            <Text
+            style={styles.emptyList}
+            >Não há anúncios publicados para esse jogo</Text>
           )}
         />
       </SafeAreaView>

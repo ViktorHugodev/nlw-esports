@@ -1,3 +1,4 @@
+import { THEME } from './../../theme/index';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -5,7 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center'
   },
-  header:{
+  header: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
@@ -20,11 +21,28 @@ export const styles = StyleSheet.create({
     width: 20,
     height: 20
   },
-  cover:{
+  cover: {
     width: 372,
     height: 192,
-    borderRadius: 8, 
+    borderRadius: 8,
     marginTop: 32,
-    
-  }
+  },
+  contentList: {
+    paddingLeft: 32,
+    paddingRight: 64,
+    alignItems: 'flex-start',
+  },
+  containerList: {
+    width: '100%',
+  },
+  emptyList: {
+    color: THEME.COLORS.CAPTION_300,
+    fontSize: THEME.FONT_SIZE.LG,
+    fontFamily: THEME.FONT_FAMILY.REGULAR
+  },
+  emptyListContent:{
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  } 
 });
