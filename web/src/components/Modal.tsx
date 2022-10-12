@@ -1,14 +1,29 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { GameController } from 'phosphor-react'
-import { ReactElement } from 'react'
+import * as Checkbox from '@radix-ui/react-checkbox';
+import * as ToggleGroup from '@radix-ui/react-toggle-group';
+import { Check, GameController } from 'phosphor-react'
+import { ReactElement, useEffect, useState } from 'react'
 import { Button } from './ButtonWeekDay'
 import { Input } from './Input'
+import { SelectGame } from './Select';
 
 interface IModal {
   children: ReactElement
   title: string
 }
+export interface IGamesProps {
+  title: string
+  id: string
+}
 export function Modal({ children, title }: IModal) {
+  const [games, setGames] = useState([])
+  const [weekDays, setWeekDays] = useState<string[]>([])
+  useEffect(() => {
+    fetch('http://localhost:3333/games')
+      .then(response => response.json())
+      .then(data => setGames(data))
+  }, [])
+  console.log(weekDays)
   return (
     <Dialog.Root>
       {children}
@@ -21,7 +36,7 @@ export function Modal({ children, title }: IModal) {
           <form className='mt-8 flex flex-col gap-4'>
             <div className='flex flex-col gap-2'>
               <label className='font-semibold' htmlFor="game">Qual o game?</label>
-              <Input id='game' placeholder='Selecione o game que deseja jogar' />
+              <SelectGame data={games} />
             </div>
 
             <div className='flex flex-col gap-2'>
@@ -43,16 +58,20 @@ export function Modal({ children, title }: IModal) {
             <div className='flex gap-6'>
               <div className='flex flex-col gap-2'>
                 <label htmlFor="weekdays">Quando costuma jogar?</label>
-                <div className='flex gap-1'>
-                  <Button title='Domingo'>D</Button>
-                  <Button title='Segunda'>S</Button>
-                  <Button title='Terça'>T</Button>
-                  <Button title='Quarta'>Q</Button>
-                  <Button title='Quinta'>Q</Button>
-                  <Button title='Sexta'>S</Button>
-                  <Button title='Sábado'>S</Button>
 
-                </div>
+                <ToggleGroup.Root type='multiple' value={weekDays} onValueChange={setWeekDays}>
+                  <ToggleGroup.Item
+                    value='0'
+                    className={`bg-zinc-900 rounded w-6 h-6 text-sm ${weekDays.includes('0') && 'bg-violet-500'}`} title='Domingo'>D</ToggleGroup.Item>
+                  <ToggleGroup.Item className={`bg-zinc-900 rounded w-6 h-6 text-sm ${weekDays.includes('1') && 'bg-violet-500'}`} value='1' title='Segunda'>S</ToggleGroup.Item>
+                  <ToggleGroup.Item className={`bg-zinc-900 rounded w-6 h-6 text-sm ${weekDays.includes('2') && 'bg-violet-500'}`} value='2' title='Terça'>T</ToggleGroup.Item>
+                  <ToggleGroup.Item className={`bg-zinc-900 rounded w-6 h-6 text-sm ${weekDays.includes('3') && 'bg-violet-500'}`} value='3' title='Quarta'>Q</ToggleGroup.Item>
+                  <ToggleGroup.Item className={`bg-zinc-900 rounded w-6 h-6 text-sm ${weekDays.includes('4') && 'bg-violet-500'}`} value='4' title='Quinta'>Q</ToggleGroup.Item>
+                  <ToggleGroup.Item className={`bg-zinc-900 rounded w-6 h-6 text-sm ${weekDays.includes('5') && 'bg-violet-500'}`} value='5' title='Sexta'>S</ToggleGroup.Item>
+                  <ToggleGroup.Item className={`bg-zinc-900 rounded w-6 h-6 text-sm ${weekDays.includes('6') && 'bg-violet-500'}`} value='6' title='Sábado'>S</ToggleGroup.Item>
+
+                </ToggleGroup.Root>
+
               </div>
               <div className='flex flex-col gap-2 flex-1'>
                 <label htmlFor="hourStart">Qual horário do dia?</label>
@@ -63,11 +82,15 @@ export function Modal({ children, title }: IModal) {
                 </div>
               </div>
             </div>
-            <div className='flex gap-2 mt-2 text-sm'>
-              <Input type="checkbox" id='useVoiceChannel' />
-              <label htmlFor="useVoiceChannel"> Costumo me conectar ao chat de voz</label>
+            <label className='flex gap-2 mt-2 text-sm items-center'>
+              <Checkbox.Root className='bg-zinc-900 h-6 w-6 rounded flex items-center justify-center'>
+                <Checkbox.Indicator >
+                  <Check className='w-4 h-4 text-emerald-400' />
+                </Checkbox.Indicator>
+              </Checkbox.Root>
+              Costumo me conectar ao chat de voz
 
-            </div>
+            </label>
             <footer className='flex mt-4 justify-end gap-4'>
               <Dialog.Close
                 type='button'
