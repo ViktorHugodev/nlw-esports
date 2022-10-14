@@ -18,12 +18,10 @@ interface IGamesProps {
 function App() {
   const [games, setGames] = useState<IGamesProps[]>([])
   async function fetchData() {
-    const response = await api.get('games')
-    console.log('test', response.data)
-    setGames(response.data)
+
   }
   useEffect(() => {
-    fetchData()
+    api('games').then(response => setGames(response.data))
   }, [])
   return (
     <div className='flex flex-col max-w-7xl mx-auto my-20 items-center'>

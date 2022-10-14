@@ -5,18 +5,13 @@ import { IGamesProps } from './Modal';
 
 interface ISelectGames {
   data: IGamesProps[]
+  callBack: (gameId: string) => void 
 }
 
-export function SelectGame({ data }: ISelectGames) {
-  const [selectedGame, setSelectedGame] = useState<string>()
-
-  function handleSelectGame(id: string) {
-    setSelectedGame(id)
-    console.log('id', id)
-  }
-
+export function SelectGame({ data, callBack }: ISelectGames) {
+ 
   return (
-    <Select.Root onValueChange={(value) => handleSelectGame(value)}>
+    <Select.Root onValueChange={(value) => callBack(value)}>
       <Select.Trigger aria-label='Games' className='bg-zinc-900 py-3 px-4 rounded text-sm text-zinc-100 placeholder:text-zinc-500 
       gap-5 flex justify-between w-full overflow-hidden rounded-lg focus:border'>
         <Select.Value placeholder='Selecione um jogo' className='' />
