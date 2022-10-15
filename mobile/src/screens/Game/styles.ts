@@ -15,15 +15,16 @@ export const styles = StyleSheet.create({
     marginTop: 28,
   },
   logo: {
-
+    height: 72,
+    width: 126
   },
   right: {
     width: 20,
     height: 20
   },
   cover: {
-    width: 372,
-    height: 192,
+    width: 268,
+    height: 140,
     borderRadius: 8,
     marginTop: 32,
   },

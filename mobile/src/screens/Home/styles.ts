@@ -6,8 +6,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   logo: {
-    width: 256,
-    height: 144,
+    width: 202,
+    height: 114,
     marginTop: 74,
     marginBottom: 48
   },

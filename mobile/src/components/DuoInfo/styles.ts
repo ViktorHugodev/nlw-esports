@@ -8,12 +8,12 @@ export const styles = StyleSheet.create({
   },
   label:{
     color: THEME.COLORS.CAPTION_300,
-    fontSize: 22,
+    fontSize: THEME.FONT_SIZE.SM,
     fontFamily: THEME.FONT_FAMILY.REGULAR,
     marginBottom: 4
   },
   value:{
-    fontSize: 18,
+    fontSize: THEME.FONT_SIZE.MD,
     fontFamily: THEME.FONT_FAMILY.BOLD,
   }
 });

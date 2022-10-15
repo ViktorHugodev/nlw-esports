@@ -3,16 +3,17 @@ import { THEME } from '../../theme';
 
 export const styles = StyleSheet.create({
   container: {
-    width: 280,
+    width: 224,
     backgroundColor: THEME.COLORS.SHAPE,
     padding: 20,
     marginRight: 16,
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 6
   },
   button: {
     flexDirection: 'row',
     width: '100%',
-    height: 42,
+    height: 38,
     borderRadius: 6,
     backgroundColor: THEME.COLORS.PRIMARY,
     alignItems: 'center',

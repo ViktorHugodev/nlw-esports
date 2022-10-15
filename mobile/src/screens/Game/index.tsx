@@ -12,6 +12,7 @@ import { IGameParams } from '../../@types/navigation';
 import { THEME } from '../../theme';
 import { Heading } from '../../components/Heading'
 import { DuoCard } from '../../components/DuoCard'
+import { DuoMatch } from '../../components/DuoMatch'
 
 interface IGame {
   hourEnd: string
@@ -19,6 +20,7 @@ interface IGame {
   id: string
   useVoiceChannel: boolean
   name: string
+  discord: string
   weekdays: string[]
   yearsPlaying: string
 }
@@ -30,6 +32,7 @@ export function Game({ data }: Props) {
   const navigation = useNavigation()
   const game = route.params as IGameParams
   const [gameSelected, setGameSelected] = useState<IGame[]>([])
+  const [discordSelected, setDiscordSeletec] = useState<string>('Victor#1212')
   function handleGoBack() {
     navigation.goBack()
   }
@@ -71,19 +74,23 @@ export function Game({ data }: Props) {
           keyExtractor={item => item.id}
           horizontal
           renderItem={({ item }) => (
-            <DuoCard 
-            onConnect={() => {}}
-            data={item} />
+            <DuoCard
+              onConnect={() => setDiscordSeletec(item.discord)}
+              data={item} />
           )}
           style={styles.containerList}
-          contentContainerStyle={[gameSelected.length > 0 ? styles.contentList: styles.emptyListContent ]}
+          contentContainerStyle={[gameSelected.length > 0 ? styles.contentList : styles.emptyListContent]}
           showsHorizontalScrollIndicator={false}
           ListEmptyComponent={() => (
             <Text
-            style={styles.emptyList}
+              style={styles.emptyList}
             >Não há anúncios publicados para esse jogo</Text>
           )}
         />
+        <DuoMatch
+          onClose={() => setDiscordSeletec('')}
+          visible={discordSelected.length > 0}
+          discord={discordSelected} />
       </SafeAreaView>
     </Background>
   );
