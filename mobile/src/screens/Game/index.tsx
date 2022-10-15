@@ -20,7 +20,6 @@ interface IGame {
   id: string
   useVoiceChannel: boolean
   name: string
-  discord: string
   weekdays: string[]
   yearsPlaying: string
 }
@@ -32,9 +31,14 @@ export function Game({ data }: Props) {
   const navigation = useNavigation()
   const game = route.params as IGameParams
   const [gameSelected, setGameSelected] = useState<IGame[]>([])
-  const [discordSelected, setDiscordSeletec] = useState<string>('Victor#1212')
+  const [discordSelected, setDiscordSeletec] = useState<string>('')
   function handleGoBack() {
     navigation.goBack()
+  }
+  async function getDiscordUser(adsId: string) {
+    fetch(`http://192.168.3.10:3333/ads/${adsId}/discord`)
+      .then(response => response.json())
+      .then(data => setDiscordSeletec(data.discord))
   }
   useEffect(() => {
     fetch(`http://192.168.3.10:3333/games/${game.id}/ads`)
@@ -75,7 +79,7 @@ export function Game({ data }: Props) {
           horizontal
           renderItem={({ item }) => (
             <DuoCard
-              onConnect={() => setDiscordSeletec(item.discord)}
+              onConnect={async () => await getDiscordUser(item.id)}
               data={item} />
           )}
           style={styles.containerList}
