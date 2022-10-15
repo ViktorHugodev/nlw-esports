@@ -31,18 +31,20 @@ export function Modal({ children, title }: IModal) {
     event.preventDefault()
     const formData = new FormData(event.target as HTMLFormElement)
     const data = Object.fromEntries(formData)
-    console.log(data)
-    const response = await api.post(`/game/${selectedGame}/ad`,{
-      name: data.name,
-      yearsPlaying: Number(data.yearsPlaying),
-      discord: data.discord,
-      weekdays: weekdays,
-      hourStart: data.hourStart,
-      hourEnd: data.hourEnd,
-      useVoiceChannel,
-      
-    })
-    console.log(response)
+
+    try {
+      await api.post(`/game/${selectedGame}/ad`, {
+        name: data.name,
+        yearsPlaying: Number(data.yearsPlaying),
+        discord: data.discord,
+        weekdays: weekdays.map(Number),
+        hourStart: data.hourStart,
+        hourEnd: data.hourEnd,
+        useVoiceChannel,
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
   return (
     <Dialog.Root>
@@ -103,13 +105,13 @@ export function Modal({ children, title }: IModal) {
               </div>
             </div>
             <label className='flex gap-2 mt-2 text-sm items-center'>
-              <Checkbox.Root 
-              onCheckedChange={(checked) => {
-                if(checked == true) setUseVoiceChannel(true)
-                else setUseVoiceChannel(false)
-              }}
-              className='bg-zinc-900 h-6 w-6 rounded flex items-center justify-center' 
-              name='useVoiceChannel'>
+              <Checkbox.Root
+                onCheckedChange={(checked) => {
+                  if (checked == true) setUseVoiceChannel(true)
+                  else setUseVoiceChannel(false)
+                }}
+                className='bg-zinc-900 h-6 w-6 rounded flex items-center justify-center'
+                name='useVoiceChannel'>
                 <Checkbox.Indicator >
                   <Check className='w-4 h-4 text-emerald-400' />
                 </Checkbox.Indicator>

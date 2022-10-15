@@ -41,7 +41,21 @@ app.post('/game/:id/ad', async (request, response) => {
   })
   return response.status(201).json(createNewAd)
 })
-
+app.post('/new-game', async (request, response) => {
+  const { title, bannerUrl } = request.body
+      const createNewGame = await prisma.game.create({
+      data: {
+        title,
+        bannerUrl
+      }
+    })
+  try {
+    console.log('response', createNewGame)
+  } catch (error) {
+    console.log('error',error)
+  }
+  return response.status(201).json(createNewGame)
+})
 app.get('/games/:id/ads', async (request, response) => {
   const gameId = request.params.id
   const ads = await prisma.ad.findMany({
@@ -80,7 +94,7 @@ app.get('/ads/:id/discord', async (request, response) => {
     where: {
       id: adsId,
     },
-    select:{
+    select: {
       discord: true
     }
   })

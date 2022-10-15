@@ -17,9 +17,7 @@ interface IGamesProps {
 
 function App() {
   const [games, setGames] = useState<IGamesProps[]>([])
-  async function fetchData() {
 
-  }
   useEffect(() => {
     api('games').then(response => setGames(response.data))
   }, [])
