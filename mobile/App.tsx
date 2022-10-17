@@ -9,17 +9,33 @@ import { Subscription } from 'expo-modules-core'
 
 import './src/service/notificationConfigs'
 import { getPushNotificationToken } from './src/service/getPushNotificationToken'
-
-const getNotificationListener = useRef<Subscription>()
-const responseNotificationListener = useRef<Subscription>()
+import *  as Notifications from 'expo-notifications'
 
 export default function App() {
+
+  const getNotificationListener = useRef<Subscription>()
+  const responseNotificationListener = useRef<Subscription>()
+
   const [fontsLoaded] = useFonts({
     Inter_400Regular, Inter_600SemiBold, Inter_700Bold, Inter_900Black
   })
   useEffect(() => {
-    getNotificationListener()
-  },[])
+    getPushNotificationToken()
+  }, [])
+  useEffect(() => {
+    getNotificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+
+    })
+    responseNotificationListener.current = Notifications.addNotificationResponseReceivedListener(notification => {
+
+    })
+    return () => {
+      if (getNotificationListener.current && responseNotificationListener.current) {
+        Notifications.removeNotificationSubscription(getNotificationListener.current)
+        Notifications.removeNotificationSubscription(responseNotificationListener.current)
+      }
+    }
+  }, [])
   return (
     <Background>
       <Text>Hello NLW-E Sports - Test</Text>
