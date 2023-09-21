@@ -3,15 +3,9 @@
 
 <br>
 
-
 The evolved version of the **Esports** project on the [Next Level Week](https://lp.rocketseat.com.br/nlw) by Rocketseat.
 
 
-<hr>
-
-**WORK IN PROGRESS:** Internationalization (i18n), new screens, form validations, unit tests w/ Jest, e2e tests w/ Cypress, pipeline deploy w/ Github Actions.
-
-<hr>
 <br>
 
   - [Description](#description)
